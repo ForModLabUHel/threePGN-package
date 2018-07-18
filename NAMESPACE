@@ -1,0 +1,2 @@
+useDynLib(threePGN)
+exportPattern("^[[:alpha:]]+")
