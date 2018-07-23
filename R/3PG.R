@@ -9,6 +9,7 @@ threePGN <- function(nvariables,siteData,
   if(all(is.na(thinning)) | totThinning == 0.) thinning = matrix(0,2,6)
   nvariables <- 8
   y <- array(-999,dim=c(nMonths,nvariables,noOfSites))
+  if(!all(siteData[,16]<=noOfSites)) stop('Provided weather data don´t match with site data')
   out <- .Fortran('model',
                   output = as.array(y),
                   nMonths = as.integer(nMonths),
