@@ -1,13 +1,13 @@
-subroutine model(y,nMonths,noOfSites,nvariables,siteData,totThinning,thinningInputs,weather,pa)
+subroutine model(y,nMonths,noOfSites,nClimID,nvariables,siteData,totThinning,thinningInputs,weather,pa)
 implicit none
-integer :: nvariables, nMonths, noOfSites,totThinning !=8,156,5
+integer :: nvariables, nMonths, noOfSites, totThinning, nClimID !=8,156,5
 real(kind=8), dimension(totThinning,6) :: thinningInputs
 real(kind=8), dimension(noOfSites,16) ::  siteData
-real(kind=8), dimension(nmonths,5,noOfSites) :: weather 
+real(kind=8), dimension(nmonths,5,nClimID) :: weather 
 real(kind=8), dimension(noOfSites+46) :: pa 
 real (kind=8) :: y(nmonths,nvariables,noOfSites)
 
-
+real(kind=8), dimension(noOfSites) :: climID
 real (kind=8), allocatable, dimension (:) :: number_site
 character(8), allocatable, dimension (:) :: name_site
 integer :: ii, siteNo, month, startMonth, jj, ij,ijj
@@ -184,7 +184,8 @@ real (kind=8) :: O_N_i
  WR_i_site = siteData(:,13)
  WS_i_site = siteData(:,14)
  nThinning_site = siteData(:,15)
- ! FR_site = siteData(:,16)
+ climID = siteData(:,16)
+ ! FR_site = siteData(:,17)
 
   if (totThinning > 0) then
    allocate(thinning(totThinning,6))
@@ -339,11 +340,11 @@ LAI = 0.
 
 !initialize climate for the site
  do ii = 1, nmonths
-    Tn(ii) = weather(ii,2,siteNo)
-    Tx(ii) = weather(ii,1,siteNo)
-    SolarRad(ii) = weather(ii,4,siteNo)
-    Rain(ii) = weather(ii,3,siteNo)
-    FrostDays(ii) = weather(ii,5,siteNo)
+    Tn(ii) = weather(ii,2,int(climID(siteNo)))
+    Tx(ii) = weather(ii,1,int(climID(siteNo)))
+    SolarRad(ii) = weather(ii,4,int(climID(siteNo)))
+    Rain(ii) = weather(ii,3,int(climID(siteNo)))
+    FrostDays(ii) = weather(ii,5,int(climID(siteNo)))
  end do
 
 !calculate climate variables  

@@ -4,6 +4,7 @@ threePGN <- function(nvariables,siteData,
 
   nMonths <- dim(weather)[1]
   noOfSites <- nrow(siteData)
+  nClimID <- dim(weather)[3]
   totThinning <- sum(siteData$nThinning)
   if(all(is.na(thinning)) | totThinning == 0.) thinning = matrix(0,2,6)
   nvariables <- 8
@@ -12,6 +13,7 @@ threePGN <- function(nvariables,siteData,
                   output = as.array(y),
                   nMonths = as.integer(nMonths),
                   noOfSites = as.integer(noOfSites),
+                  nClimID = as.integer(nClimID),
                   nvariables = as.integer(nvariables),
                   siteData = as.matrix(siteData),
                   totThinning = as.integer(totThinning),

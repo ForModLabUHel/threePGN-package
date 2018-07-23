@@ -6,6 +6,7 @@ library(ggplot2)
 
 
 # 1. Inicial run of the model ---------------------------------------------
+# siteData <- siteData[1:2,]
 firstRun <- threePGN(nvariables = 8, siteData = siteData, weather=weather, pValues = pars[,2])
 
 
@@ -13,7 +14,7 @@ firstRun <- threePGN(nvariables = 8, siteData = siteData, weather=weather, pValu
 varnames <- c('standAge','NEP','dbh','H','WF','WR','WS','StandVol')
 
 # tranform output to the long format
-matrix(firstRun$output, ncol = firstRun$noOfSites, byrow = F) %>% 
+matrix(firstRun$output, ncol = firstRun$noOfSites, byrow = F) %>%
   data.frame() %>%
   mutate(variable = rep(varnames, each = firstRun$nMonths),
          id = rep(1:firstRun$nMonths, times = length(varnames))) %>%
@@ -24,7 +25,7 @@ matrix(firstRun$output, ncol = firstRun$noOfSites, byrow = F) %>%
   firstRun_long
 
 # visualize the run
-firstRun_long %>% 
+firstRun_long %>%
   ggplot()+
   geom_line(aes(standAge, value, colour = site))+
   facet_wrap(~variable, scales = 'free_y') +
