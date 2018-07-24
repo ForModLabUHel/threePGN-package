@@ -19,13 +19,13 @@ Windows users: the package contains c++ code, so if you compile yourself, you ne
 To get an overview about its functionality once the package is installed, run
 
 ```{r}
-library(r3pg)
-?r3pg
-vignette("r3pg", package="r3pg")
+library(threePGN)
+?threePGN
+vignette("threePGN", package="threePGN")
 ```
 
 As for every R package, you can get the suggested citation via
 
 ```{r}
-citation("r3pg")
+citation("threePGN")
 ```
