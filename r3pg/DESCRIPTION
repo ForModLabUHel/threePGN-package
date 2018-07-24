@@ -2,7 +2,7 @@ Package: threePGN
 Type: Package
 Title: 3PGN model
 Version: 0.1.0
-Author: Francesco Minunno
+Author: Francesco Minunno, Florian Hartig, Volodymyr Trotsiuk
 Maintainer: The package maintainer <francesco.minunno@helsinki.fi>
 Description: This package contains a fortran version of 3PGN model wrapped into R
 License: GPL-3
