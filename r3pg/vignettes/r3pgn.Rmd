@@ -1,0 +1,22 @@
+---
+title: "r3pgn"
+output: 
+  rmarkdown::html_vignette:
+    toc: true
+vignette: >
+  %\VignetteIndexEntry{Manual for the r3pgn package}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+abstract: "adsf". 
+\n \n \n"
+
+---
+
+```{r global_options, include=FALSE}
+knitr::opts_chunk$set(fig.width=5, fig.height=5, warning=FALSE, cache = F)
+```
+
+```{r, echo = F, message = F}
+set.seed(123)
+```
+
