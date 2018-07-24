@@ -4,7 +4,7 @@
 \alias{r3pgn}
 \title{Define the function to run 3PGN in R}
 \usage{
-r3pgn(nvariables, siteData, thinning = NA, weather, pValues)
+r3pgn(siteData, weather, thinning = NA, parameters, outputs = NA)
 }
 \arguments{
 \item{nvariables}{needs to be documented later}
@@ -17,5 +17,8 @@ This is the model
 }
 \examples{
 firstRun <- r3pgn(nvariables = 8, siteData = siteData,weather=weather,pValues = pars[,2])
+print(firstRun)
+plot(firstRun)
+
 plot(firstRun$output[,1,1],firstRun$output[,2,1],ylab="",main="NEP",xlab="Age")
 }
