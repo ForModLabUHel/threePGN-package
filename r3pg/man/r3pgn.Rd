@@ -16,7 +16,7 @@ Define the function to run 3PGN in R
 This is the model
 }
 \examples{
-firstRun <- r3pgn(nvariables = 8, siteData = siteData,weather=weather,pValues = pars[,2])
+firstRun <- r3pgn(siteData = siteData,weather=weather,parameters = pars[,2])
 print(firstRun)
 plot(firstRun)
 
