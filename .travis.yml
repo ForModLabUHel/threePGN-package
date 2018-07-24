@@ -1,0 +1,15 @@
+before_install:
+ - cd 3pgn
+
+language: r
+r:
+  - oldrel
+  - release
+  - devel
+
+cache: packages
+
+addons:
+  apt:
+    packages:
+      - libnlopt-dev
