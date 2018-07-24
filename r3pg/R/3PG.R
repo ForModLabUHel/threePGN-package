@@ -1,5 +1,11 @@
 #' Define the function to run 3PGN in R
-threePGN <- function(nvariables,siteData,
+#'
+#' @param nvariables needs to be documented later
+#' @details This is the model
+#' @example /inst/examples/r3pgnHelp.R
+#' @export
+#' @useDynLib threePGN
+r3pgn <- function(nvariables,siteData,
                        thinning = NA,weather,pValues){
 
   nMonths <- dim(weather)[1]
