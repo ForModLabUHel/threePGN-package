@@ -1,6 +1,6 @@
-# threePGN-package
-3PGN model in fortran called from R
+# threePGN
 
+An R package to run the [3PGN](http://3pg.forestry.ubc.ca) model written in fortran.
 
 ### Installing the development version from GitHub
 
