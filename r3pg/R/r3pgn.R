@@ -42,7 +42,7 @@ r3pgn <- function(siteData,
                   siteData = as.matrix(siteData),
                   totThinning = as.integer(totThinning),
                   thinning = as.matrix(thinning),
-                  weather = as.array(weather),
+                  climate = as.array(climate),
                   pValues = as.numeric(parameters))
 
   out$vars <- outNam[outputs]
