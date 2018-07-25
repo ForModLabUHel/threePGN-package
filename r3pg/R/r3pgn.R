@@ -42,8 +42,8 @@ r3pgn <- function(siteData,
                   siteData = as.matrix(siteData),
                   totThinning = as.integer(totThinning),
                   thinning = as.matrix(thinning),
-                  climate = as.array(climate),
-                  pValues = as.numeric(parameters))
+                  weather = as.array(climate),
+                  parameters = as.numeric(parameters))
 
   out$vars <- outNam[outputs]
   class(out) = "r3pgOut"
