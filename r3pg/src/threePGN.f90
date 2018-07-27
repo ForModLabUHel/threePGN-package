@@ -85,7 +85,7 @@ real (kind=8) :: rg, rf, rw, Q10
 real (kind=8) :: pfsPower, pfsConst
 
 !carbon allocation routine and mensurational data
-real (kind=8) :: m0, pFS20, pFS2, AvStemMass, avD, StemConst, StemPower, BasArea, Height, aH, bW, &
+real (kind=8) :: m0, pFS20, pFS2, AvStemMass, avDBH, StemConst, StemPower, BasArea, Height, aH, bW, &
         cD, SLA, SLA1, SLA0, tSLA, avLAI, pFS, pR, pRx, pRn, pS, pF, fracBB0, fracBB1, tBB, Density, &
          StemNo, fracBB, StandVol, MAI, aV, nVB, nVN, oldVol, rho0,rho1, tRho, CVI
 
@@ -103,7 +103,7 @@ real (kind=8) :: kr, krmax, kl, klmax, ko, komax, Yl_Coutflux, hc, Yl_C, Yr_Cout
  
 ! Water balance
 real (kind=8) :: CanCond, MaxCond, LAIgcx, Qa, qb, BLcond, gC, CanopyTranspiration, Transp, LAImaxIntcptn, MaxIntcptn, &
-        EvapTransp, Irrig, cumIrrig, MinASW, MaxASW, poolFractn, MinCond, pooledSW, fracRainIntcptn,RainIntcptn, &
+        EvapTransp, Irrig, cumIrrig, MinASW, MaxASW, poolFractn, MinCond, pooledSW, fRainInt,RainInt, &
 	excessSW, RunOff, supIrrig,TranspScaleFactor, WUE
         
 ! Carbon fluxes (MG/ha)
@@ -337,14 +337,14 @@ LAI = 0.
   pfsPower = Log(pFS20 / pFS2) / Log(20./2.)
   pfsConst = pFS2 / 2. ** pfsPower
   AvStemMass = WS * 1000. / StemNo                                 !kg/tree
-  avD = StemConst*(((WS+WF) * 1000. )/ StemNo) ** (StemPower) !(AvStemMass/StemConst) ** (1/StemPower) !
-  BasArea = (((avD / 200.) ** 2.) * Pi) * StemNo
+  avDBH = StemConst*(((WS+WF) * 1000. )/ StemNo) ** (StemPower) !(AvStemMass/StemConst) ** (1/StemPower) !
+  BasArea = (((avDBH / 200.) ** 2.) * Pi) * StemNo
   Height = aH*((WS + WF) * 1000. / StemNo)**bW !* StemNo ** cD
   LAI = WF * SLA * 0.1
   avLAI = LAI
   
   if (aV > 0) then
-    StandVol = aV * avD ** nVB * StemNo ** nVN 
+    StandVol = aV * avDBH ** nVB * StemNo ** nVN 
   else
     StandVol = WS * (1 - fracBB) / Density  
   end if
@@ -459,17 +459,17 @@ month=startMonth
   
   !rainfall interception
       If (LAImaxIntcptn > 0.) Then 
-         fracRainIntcptn = MaxIntcptn * Min(1., LAI / LAImaxIntcptn)
+         fRainInt = MaxIntcptn * Min(1., LAI / LAImaxIntcptn)
       else
-         fracRainIntcptn = MaxIntcptn 
+         fRainInt = MaxIntcptn 
       end if
-   RainIntcptn = Rain(ii) * fracRainIntcptn
+   RainInt = Rain(ii) * fRainInt
 
   !do soil water balance
   SupIrrig = 0.
   RunOff = 0.     
   ASW = ASW + Rain(ii) + (100. * Irrig / 12.) + pooledSW
-  EvapTransp = Min(ASW, Transp + RainIntcptn)          !ET can not exceed ASW
+  EvapTransp = Min(ASW, Transp + RainInt)          !ET can not exceed ASW
   excessSW = max(ASW - EvapTransp - MaxASW, 0.)
   ASW = ASW - EvapTransp - excessSW
   pooledSW = poolFractn * excessSW
@@ -480,7 +480,7 @@ month=startMonth
   end if  
 
   !correct for actual ET
-  TranspScaleFactor = EvapTransp / (Transp + RainIntcptn)   !scales NPP and GPP
+  TranspScaleFactor = EvapTransp / (Transp + RainInt)   !scales NPP and GPP
   GPP = TranspScaleFactor * GPP
   NPP = TranspScaleFactor * NPP
   WUE = NPP / EvapTransp
@@ -491,7 +491,7 @@ month=startMonth
 
 
   m = m0 + (1 - m0) * FR
-  pFS = pfsConst * avD ** pfsPower
+  pFS = pfsConst * avDBH ** pfsPower
   pR = pRx * pRn / (pRn + (pRx - pRn) * PhysMod * m)
   pS = (1 - pR) / (1 + pFS)
   pF = 1 - pR - pS
@@ -649,11 +649,11 @@ end if
 
 !update stand characteristics
   LAI = WF * SLA * 0.1
-  avD = StemConst*(((WS+WF) * 1000. )/ StemNo) ** (StemPower) !(AvStemMass/StemConst) ** (1/StemPower) !
-  BasArea = (((avD / 200.) ** 2) * Pi) * StemNo
+  avDBH = StemConst*(((WS+WF) * 1000. )/ StemNo) ** (StemPower) !(AvStemMass/StemConst) ** (1/StemPower) !
+  BasArea = (((avDBH / 200.) ** 2) * Pi) * StemNo
   Height = aH*((WS + WF) * 1000. / StemNo)**bW! * StemNo ** cD
   if (aV > 0) then
-    StandVol = aV * avD ** nVB * StemNo ** nVN 
+    StandVol = aV * avDBH ** nVB * StemNo ** nVN 
   else
     StandVol = WS * (1 - fracBB) / Density  
   end if
@@ -676,7 +676,7 @@ outs(	1	)	=	StandAge
 outs(	2	)	=	StemNo
 outs(	3	)	=	BasArea
 outs(	4	)	=	StandVol
-outs(	5	)	=	avD
+outs(	5	)	=	avDBH
 outs(	6	)	=	MAI
 outs(	7	)	=	SLA
 outs(	8	)	=	CanCover
@@ -716,8 +716,8 @@ outs(	41	)	=	gammaN
 outs(	42	)	=	Mortality
 outs(	43	)	=	supIrrig
 outs(	44	)	=	RunOff
-outs(	45	)	=	fracRainIntcptn
-outs(	46	)	=	RainIntcptn
+outs(	45	)	=	fRainInt
+outs(	46	)	=	RainInt
 outs(	47	)	=	CanCond
 outs(	48	)	=	WUE
 outs(	49	)	=	EvapTransp
