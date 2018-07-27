@@ -16,7 +16,7 @@ r3pgn <- function(siteData,
                   climate,
                   thinning = NULL,
                   parameters,
-                  outputs = NULL
+                  outputs = c(1:5,10:12,26:27)
                   ){
 
   nMonths <- dim(climate)[1]
@@ -26,8 +26,7 @@ r3pgn <- function(siteData,
 
   if( all( is.null( thinning ) ) | totThinning == 0.) thinning = matrix(0,2,6)
 
-  nvariables = outputs
-  nvariables <- 8
+  nvariables = length(outputs)
 
   y <- array(-999,dim=c(nMonths,nvariables,noOfSites))
 
@@ -39,12 +38,25 @@ r3pgn <- function(siteData,
                   noOfSites = as.integer(noOfSites),
                   nClimID = as.integer(nClimID),
                   nvariables = as.integer(nvariables),
+                  vars = as.integer(outputs),
                   siteData = as.matrix(siteData),
                   totThinning = as.integer(totThinning),
                   thinning = as.matrix(thinning),
                   weather = as.array(climate),
-                  pValues = as.numeric(parameters))
+                  parameters = as.numeric(parameters))
 
+  out$vars <- outNam[outputs]
   class(out) = "r3pgOut"
   return(out)
 }
+
+#' @export
+outNam <- c("StandAge","StemNo","BasArea","StandVol","avD","MAI",
+            "SLA","CanCover","LAI","WF","WR","WS","WL",
+            "TotalW","AvStemMass","fracBB","fAge","fVPD","fT",
+            "fCalpha","fCg","fFrost","fSW","fNutr","PhysMod","GPP",
+            "NPP","RadInt","alphaC","epsilon","CVI","m","pR","pS",
+            "pF","pFS","gammaF","lossWF","lossWR","wSmax","gammaN",
+            "Mortality","supIrrig","RunOff","fracRainIntcptn","RainIntcptn",
+            "CanCond","WUE","EvapTransp","Transp","ASW","NEP","Rhet",
+            "Yr_C","Yl_C","O_C","Yr_N","Yl_N","O_N")
