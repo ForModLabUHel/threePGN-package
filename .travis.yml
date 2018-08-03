@@ -1,5 +1,5 @@
 before_install:
- - cd r3pgn
+ - cd r3pg
 
 language: r
 r:

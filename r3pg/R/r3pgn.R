@@ -4,6 +4,7 @@
 #' @param climate a \code{three-dimentional array} containing the weather information. Please refer to \code{\link{data_climate}} for more information
 #' @param thinning an \code{data frame} containing information regarding thinning. Please refer to \code{\link{data_thinning}} for more information
 #' @param parameters a vector of parameters values. To see the order of parameters please refer to \code{\link{data_param}}
+#' @param outputs a numerical vector of output variables IDs. To see the order of variables and meaning refer to \code{\link{data_output_var}}
 #'
 #' @details This is the model
 #'
@@ -50,13 +51,13 @@ r3pgn <- function(siteData,
   return(out)
 }
 
-#' @export
-outNam <- c("StandAge","StemNo","BasArea","StandVol","avD","MAI",
+
+outNam <- c("StandAge","StemNo","BasArea","StandVol","avDBH","MAI",
             "SLA","CanCover","LAI","WF","WR","WS","WL",
             "TotalW","AvStemMass","fracBB","fAge","fVPD","fT",
             "fCalpha","fCg","fFrost","fSW","fNutr","PhysMod","GPP",
             "NPP","RadInt","alphaC","epsilon","CVI","m","pR","pS",
             "pF","pFS","gammaF","lossWF","lossWR","wSmax","gammaN",
-            "Mortality","supIrrig","RunOff","fracRainIntcptn","RainIntcptn",
+            "Mortality","supIrrig","RunOff","fRainInt","RainInt",
             "CanCond","WUE","EvapTransp","Transp","ASW","NEP","Rhet",
             "Yr_C","Yl_C","O_C","Yr_N","Yl_N","O_N")

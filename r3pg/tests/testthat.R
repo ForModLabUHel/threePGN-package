@@ -1,2 +1,2 @@
-library(r3pgn)
+library(threePGN)
 library(testthat)

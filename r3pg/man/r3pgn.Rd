@@ -4,7 +4,8 @@
 \alias{r3pgn}
 \title{Define the function to run 3PGN in R}
 \usage{
-r3pgn(siteData, climate, thinning = NULL, parameters, outputs = NULL)
+r3pgn(siteData, climate, thinning = NULL, parameters, outputs = c(1:5,
+  10:12, 26:27))
 }
 \arguments{
 \item{siteData}{an initial site information data. \code{Data frame}, with each row representing one site. Please refer to \code{\link{data_site}} for more information}
@@ -14,6 +15,8 @@ r3pgn(siteData, climate, thinning = NULL, parameters, outputs = NULL)
 \item{thinning}{an \code{data frame} containing information regarding thinning. Please refer to \code{\link{data_thinning}} for more information}
 
 \item{parameters}{a vector of parameters values. To see the order of parameters please refer to \code{\link{data_param}}}
+
+\item{outputs}{a numerical vector of output variables IDs. To see the order of variables and meaning refer to \code{\link{data_output_var}}}
 }
 \description{
 Define the function to run 3PGN in R
@@ -22,7 +25,8 @@ Define the function to run 3PGN in R
 This is the model
 }
 \examples{
-firstRun <- r3pgn(siteData = data_site, climate = data_climate, parameters = data_param[,2])
+firstRun <- r3pgn(siteData = data_site, climate = data_climate, parameters = data_param[,2], outputs = c(1:5,
+  10:12, 26:27))
 
 print(firstRun)
 plot(firstRun)

@@ -25,12 +25,13 @@ library(ggplot2)
 
 # Run the model
 ```{r}
-firstRun <- r3pgn(siteData = data_site[1:3,], climate = data_climate, parameters = data_param[,2])
+firstRun <- r3pgn(siteData = data_site[1:3,], climate = data_climate, parameters = data_param[,2], outputs = c(1:5,
+  10:12, 26:27))
 ```
 
 # Visualiza the output
 ```{r}
-varnames <- c('standAge','NEP','dbh','H','WF','WR','WS','StandVol')
+varnames <- firstRun$vars
 
 # tranform output to the long format
 matrix(firstRun$output, ncol = firstRun$noOfSites, byrow = F) %>%
@@ -40,13 +41,13 @@ matrix(firstRun$output, ncol = firstRun$noOfSites, byrow = F) %>%
   tidyr::gather(site, value, -variable, -id) %>%
   tidyr::spread(variable, value) %>%
   select(-id) %>%
-  tidyr::gather(variable, value, -site, -standAge) ->
+  tidyr::gather(variable, value, -site, -StandAge) ->
   firstRun_long
 
 # visualize the run
 firstRun_long %>%
   ggplot()+
-  geom_line(aes(standAge, value, colour = site))+
+  geom_line(aes(StandAge, value, colour = site))+
   facet_wrap(~variable, scales = 'free_y') +
   theme_bw()
 ```
