@@ -90,8 +90,8 @@ NULL
 #'    \itemize{
 #'      \item 24: \code{pFS2} - Foliage:stem partitioning ratio \eqn{D = 2} cm
 #'      \item 16: \code{pFS20} - Foliage:stem partitioning ratio \eqn{D = 20} cm
-#'      \item -: \code{aWS} - Constant in the stem mass v. diam. relationship (alt. stemConst)
-#'      \item -: \code{nWS} - Power in the stem mass v. diam. relationship (alt. stemPower)
+#'      \item 15: \code{aWS} - Constant in the stem mass v. diam. relationship (alt. stemConst)
+#'      \item 1: \code{nWS} - Power in the stem mass v. diam. relationship (alt. stemPower)
 #'      \item 22: \code{pRx} - Maximum fraction of NPP to roots
 #'      \item 17: \code{pRn} - Minimum fraction of NPP to roots
 #'      }
@@ -154,7 +154,7 @@ NULL
 #'     \item 18: \code{k} - Extinction coefficient for absorption of PAR by canopy
 #'     \item 21: \code{fullCanAge} - Age at canopy closure
 #'     \item 5: \code{alpha} - Maximum canopy quantum efficiency
-#'     \item -: \code{Y} -
+#'     \item 10: \code{rg} - Ratio NPP/GPP (alt. Y)
 #'    }
 #'   \item Branch and bark fraction \code{(fracBB)}
 #'    \itemize{
@@ -162,25 +162,28 @@ NULL
 #'     \item 19: \code{fracBB1} - Branch and bark fraction for mature stands
 #'     \item 28: \code{tBB} - Age at which \eqn{fracBB = (fracBB0+fracBB1)/2}
 #'    }
+#'   \item Baasic density
+#'    \itemize{
+#'     \item 11: \code{rho1} - Ratio of basic density of young to old trees
+#'    }
 #'   \item Stem height allometric relationship
 #'    \itemize{
 #'     \item 2: \code{aH} - Constant in the stem height relationship
+#'     \item 3: \code{bW} -
+#'    }
+#'   \item Soil module part
+#'    \itemize{
+#'     \item 4: \code{klmax} - Decomposition rate constant for the `young and labile` pool per month
+#'     \item 7: \code{krmax} - Decomposition rate constant for the `young and refractory` pool per month
+#'     \item 41: \code{komax} - Decomposition rate constant for the `old` pool per month
+#'     \item 25: \code{hc} - Humification coefficient
+#'     \item 42: \code{dmC} -
+#'     \item 43: \code{Yl_C_i} - Ratio of labile litter input?
+#'     \item 44: \code{Yr_C_i} - Ratio of refractory litter input?
+#'     \item 45: \code{O_C_i} - Ratio of humification?
 #'    }
 #'   \item NOT DOCUMENTED
 #'    \itemize{
-#'     \item 1: \code{StemPower} -
-#'     \item 3: \code{bW} -
-#'     \item 4: \code{klmax} -
-#'     \item 7: \code{krmax} -
-#'     \item 10: \code{rg} -
-#'     \item 11: \code{rho1} -
-#'     \item 15: \code{StemConst} -
-#'     \item 25: \code{hc} -
-#'     \item 41: \code{komax} -
-#'     \item 42: \code{dmC} -
-#'     \item 43: \code{Yl_C_i} -
-#'     \item 44: \code{Yr_C_i} -
-#'     \item 45: \code{O_C_i} -
 #'     \item 47: \code{FR_esp} -
 #'     \item 48: \code{FR_ferc} -
 #'     \item 49: \code{FR_ferf} -
@@ -261,10 +264,10 @@ NULL
 #'     \item 36: \code{pFS} - Ratio of foliage to stem biomass allocation (\eqn{-})
 #'     \item 37: \code{gammaF} - Current leaf litterfall rate (\eqn{month^-1})
 #'    }
-#'   \item NOT DOCUMENTED
+#'   \item Litterfall & root turnover
 #'    \itemize{
-#'     \item 38: \code{lossWF} -  (\eqn{-})
-#'     \item 39: \code{lossWR} -  (\eqn{-})
+#'     \item 38: \code{lossWF} - Litterfall turnover (\eqn{-})
+#'     \item 39: \code{lossWR} - Toot turnover (\eqn{-})
 #'    }
 #'   \item Stem mortality
 #'    \itemize{
@@ -284,16 +287,16 @@ NULL
 #'     \item 50: \code{Transp} - Monthly transpiration rate in current period (\eqn{mm})
 #'     \item 51: \code{ASW} - Available soil water (\eqn{mm})
 #'    }
-#'   \item NOT DOCUMENTED
+#'   \item Soil model
 #'    \itemize{
 #'     \item 52: \code{NEP} -  (\eqn{-})
 #'     \item 53: \code{Rhet} -  (\eqn{-})
-#'     \item 54: \code{Yr_C} -  (\eqn{-})
-#'     \item 55: \code{Yl_C} -  (\eqn{-})
-#'     \item 56: \code{O_C} -  (\eqn{-})
-#'     \item 57: \code{Yr_N} -  (\eqn{-})
-#'     \item 58: \code{Yl_N} -  (\eqn{-})
-#'     \item 59: \code{O_N} -  (\eqn{-})
+#'     \item 54: \code{Yr_C} - Refractory pool for carbon (\eqn{tC ha^−1})
+#'     \item 55: \code{Yl_C} - Labile pool for carbon (\eqn{tC ha^−1})
+#'     \item 56: \code{O_C} - Humified poll for carbon (\eqn{tC ha^−1})
+#'     \item 57: \code{Yr_N} - Refractory pool for nitrogen (\eqn{tC ha^−1})
+#'     \item 58: \code{Yl_N} - Labile pool for nitrogen (\eqn{tC ha^−1})
+#'     \item 59: \code{O_N} - Humified poll for nitrogen (\eqn{tC ha^−1})
 #'    }
 #' }
 #'
