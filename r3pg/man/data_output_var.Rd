@@ -62,10 +62,10 @@ Names and description of 3PGP output variables as described in \code{Table 4.} i
     \item 36: \code{pFS} - Ratio of foliage to stem biomass allocation (\eqn{-})
     \item 37: \code{gammaF} - Current leaf litterfall rate (\eqn{month^-1})
    }
-  \item NOT DOCUMENTED
+  \item Litterfall & root turnover
    \itemize{
-    \item 38: \code{lossWF} -  (\eqn{-})
-    \item 39: \code{lossWR} -  (\eqn{-})
+    \item 38: \code{lossWF} - Litterfall turnover (\eqn{-})
+    \item 39: \code{lossWR} - Toot turnover (\eqn{-})
    }
   \item Stem mortality
    \itemize{
@@ -85,16 +85,16 @@ Names and description of 3PGP output variables as described in \code{Table 4.} i
     \item 50: \code{Transp} - Monthly transpiration rate in current period (\eqn{mm})
     \item 51: \code{ASW} - Available soil water (\eqn{mm})
    }
-  \item NOT DOCUMENTED
+  \item Soil model
    \itemize{
     \item 52: \code{NEP} -  (\eqn{-})
     \item 53: \code{Rhet} -  (\eqn{-})
-    \item 54: \code{Yr_C} -  (\eqn{-})
-    \item 55: \code{Yl_C} -  (\eqn{-})
-    \item 56: \code{O_C} -  (\eqn{-})
-    \item 57: \code{Yr_N} -  (\eqn{-})
-    \item 58: \code{Yl_N} -  (\eqn{-})
-    \item 59: \code{O_N} -  (\eqn{-})
+    \item 54: \code{Yr_C} - Refractory pool for carbon (\eqn{tC ha^−1})
+    \item 55: \code{Yl_C} - Labile pool for carbon (\eqn{tC ha^−1})
+    \item 56: \code{O_C} - Humified poll for carbon (\eqn{tC ha^−1})
+    \item 57: \code{Yr_N} - Refractory pool for nitrogen (\eqn{tC ha^−1})
+    \item 58: \code{Yl_N} - Labile pool for nitrogen (\eqn{tC ha^−1})
+    \item 59: \code{O_N} - Humified poll for nitrogen (\eqn{tC ha^−1})
    }
 }
 }
