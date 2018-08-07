@@ -1,5 +1,7 @@
 ---
 title: "r3pgn"
+date: "`r Sys.Date()`"
+author: "Francesco Minunno, Florian Hartig, Volodymyr Trotsiuk"
 output: 
   rmarkdown::html_vignette:
     toc: true
@@ -7,10 +9,10 @@ vignette: >
   %\VignetteIndexEntry{Manual for the r3pgn package}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
-abstract: "adsf". 
+abstract: "The r3pgn package allows running the 3PGN model from R
 \n \n \n"
-
 ---
+
 
 ```{r global_options, include=FALSE}
 knitr::opts_chunk$set(fig.width=5, fig.height=5, warning=FALSE, cache = F)

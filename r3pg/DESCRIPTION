@@ -24,3 +24,7 @@ Suggests:
 Encoding: UTF-8
 LazyData: true
 RoxygenNote: 6.0.1
+URL: https://github.com/checcomi/threePGN-package
+BugReports: https://github.com/checcomi/threePGN-package/issues
+VignetteBuilder: knitr
+
