@@ -215,27 +215,27 @@ NULL
 #'   \item Stand attributes
 #'    \itemize{
 #'      \item 1: \code{StandAge} - Stand age (\eqn{yr})
-#'      \item 2: \code{StemNo} - Stand stocking (\eqn{trees ha^-1})
-#'      \item 3: \code{BasArea} - Stand basal area (\eqn{m^2 ha^-1})
-#'      \item 4: \code{StandVol} - Stand volume excluding branch & bark (\eqn{m^3 ha^-1})
+#'      \item 2: \code{StemNo} - Stand stocking (\eqn{trees/ha})
+#'      \item 3: \code{BasArea} - Stand basal area (\eqn{m^2/ha})
+#'      \item 4: \code{StandVol} - Stand volume excluding branch & bark (\eqn{m^3/ha})
 #'      \item 5: \code{avDBH} - Stand volume excluding branch & bark (\eqn{cm})
-#'      \item 6: \code{MAI} - Mean annual volume increment (\eqn{m^3 ha^-1 yr^-1})
+#'      \item 6: \code{MAI} - Mean annual volume increment (\eqn{m^3/ha /yr})
 #'      }
 #'   \item Canopy attributes
 #'    \itemize{
 #'     \item 7: \code{SLA} - Specific leaf area (\eqn{m^2 kg^-1})
 #'     \item 8: \code{CanCover} - Fraction of ground area covered by canopy (\eqn{-})
-#'     \item 9: \code{LAI} - Canopy LAI (\eqn{m^2 m^-2})
+#'     \item 9: \code{LAI} - Canopy LAI (\eqn{m^2 /m^2})
 #'    }
 #'   \item Biomass pools
 #'    \itemize{
-#'     \item 10: \code{WF} - Foliage biomass (\eqn{t_DM ha^-1})
-#'     \item 11: \code{WR} - Root biomass (\eqn{t_DM ha^-1})
-#'     \item 12: \code{WS} - Stem biomass, including branches and bark (\eqn{t_DM ha^-1})
-#'     \item 13: \code{WL} - Accumulated litter fall (also TotalLitter) (\eqn{t_DM ha^-1})
-#'     \item 14: \code{TotalW} - Total biomass (\eqn{t_DM ha^-1})
-#'     \item 15: \code{AvStemMass} - Mean stem biomass per tree (\eqn{t_DM ha^-1})
-#'     \item 16: \code{fracBB} - Fraction of stem biomass as branch and bark (\eqn{t_DM ha^-1})
+#'     \item 10: \code{WF} - Foliage biomass (\eqn{t_DM/ha})
+#'     \item 11: \code{WR} - Root biomass (\eqn{t_DM/ha})
+#'     \item 12: \code{WS} - Stem biomass, including branches and bark (\eqn{t_DM/ha})
+#'     \item 13: \code{WL} - Accumulated litter fall (also TotalLitter) (\eqn{t_DM/ha})
+#'     \item 14: \code{TotalW} - Total biomass (\eqn{t_DM/ha})
+#'     \item 15: \code{AvStemMass} - Mean stem biomass per tree (\eqn{t_DM/ha})
+#'     \item 16: \code{fracBB} - Fraction of stem biomass as branch and bark (\eqn{t_DM/ha})
 #'    }
 #'   \item Growth modifiers
 #'    \itemize{
@@ -251,12 +251,12 @@ NULL
 #'    }
 #'   \item Biomass production and allocation
 #'    \itemize{
-#'     \item 26: \code{GPP} - Gross primary production in current period (\eqn{t_DM ha^-1})
-#'     \item 27: \code{NPP} - Net primary production in current period (\eqn{t_DM ha^-1})
-#'     \item 28: \code{RadInt} - Total solar radiation intercepted by canopy (\eqn{MJ m^-2 month^-1})
+#'     \item 26: \code{GPP} - Gross primary production in current period (\eqn{t_DM/ha})
+#'     \item 27: \code{NPP} - Net primary production in current period (\eqn{t_DM/ha})
+#'     \item 28: \code{RadInt} - Total solar radiation intercepted by canopy (\eqn{MJ/m^2/month})
 #'     \item 29: \code{alphaC} - Canopy quantum efficiency after modifiers (\eqn{mol mol^-1})
-#'     \item 30: \code{epsilon} - Light utilisation efficiency based on total biomass (\eqn{g_DM MJ^-1})
-#'     \item 31: \code{CVI} - Stem volume increment in current period (\eqn{m^3 ha^-1})
+#'     \item 30: \code{epsilon} - Light utilisation efficiency based on total biomass (\eqn{g_DM/MJ})
+#'     \item 31: \code{CVI} - Stem volume increment in current period (\eqn{m^3/ha})
 #'     \item 32: \code{m} - FR modifier of root biomass allocation (\eqn{-})
 #'     \item 33: \code{pR} - Fraction of NPP allocated to roots (\eqn{-})
 #'     \item 34: \code{pS} - Fraction of NPP allocated to stems (\eqn{-})
@@ -273,7 +273,7 @@ NULL
 #'    \itemize{
 #'     \item 40: \code{wSmax} - Max. mean tree stem mass at current stocking (\eqn{kg tree^-1})
 #'     \item 41: \code{gammaN} - Density independent mortality rate (\eqn{month^-1})
-#'     \item 42: \code{Mortality} - Number of stems dying in current period (\eqn{trees ha^-1})
+#'     \item 42: \code{Mortality} - Number of stems dying in current period (\eqn{trees/ha})
 #'    }
 #'   \item Water use
 #'    \itemize{
@@ -291,17 +291,17 @@ NULL
 #'    \itemize{
 #'     \item 52: \code{NEP} -  (\eqn{-})
 #'     \item 53: \code{Rhet} -  (\eqn{-})
-#'     \item 54: \code{Yr_C} - Refractory pool for carbon (\eqn{tC ha^−1})
-#'     \item 55: \code{Yl_C} - Labile pool for carbon (\eqn{tC ha^−1})
-#'     \item 56: \code{O_C} - Humified poll for carbon (\eqn{tC ha^−1})
-#'     \item 57: \code{Yr_N} - Refractory pool for nitrogen (\eqn{tC ha^−1})
-#'     \item 58: \code{Yl_N} - Labile pool for nitrogen (\eqn{tC ha^−1})
-#'     \item 59: \code{O_N} - Humified poll for nitrogen (\eqn{tC ha^−1})
+#'     \item 54: \code{Yr_C} - Refractory pool for carbon (\eqn{tC/ha})
+#'     \item 55: \code{Yl_C} - Labile pool for carbon (\eqn{tC/ha})
+#'     \item 56: \code{O_C} - Humified poll for carbon (\eqn{tC/ha})
+#'     \item 57: \code{Yr_N} - Refractory pool for nitrogen (\eqn{tC/ha})
+#'     \item 58: \code{Yl_N} - Labile pool for nitrogen (\eqn{tC/ha})
+#'     \item 59: \code{O_N} - Humified poll for nitrogen (\eqn{tC/ha})
 #'    }
 #' }
 #'
 #' @docType data
 #' @keywords outputs
-#' @name data_output_var
+#' @name data_output
 #' @format A vector of outpus. Please reffer to output ID (numerical value)
 NULL
