@@ -31,7 +31,7 @@ r3pgn <- function(siteData,
 
   y <- array(-999,dim=c(nMonths,nvariables,noOfSites))
 
-  if( length(unique(siteData[['climId']])) != nClimID ) stop('Provided climate data don´t match with site data')
+  if( length(unique(siteData[['climId']])) != nClimID ) stop("Provided climate data don't match with site data")
 
   out <- .Fortran('model',
                   output = as.array(y),
