@@ -39,20 +39,18 @@ subroutine model(y, &
     
     real(kind=8), dimension(noOfSites) :: climID
     real(kind=8), dimension (noOfSites) :: number_site
-    character(8), dimension (noOfSites) :: name_site
     integer :: ii, siteNo, month, startMonth, jj, ij,ijj
     real(kind=8), dimension(12) :: NEPmat=0
     real(kind=8) :: aNEP
     real(kind=8), dimension(noOfSites) :: Lat_site, StemNo_site, ASW_site, MinASW_site, & 
         MaxASW_site, FR_site, poolFractn_site, startAge_site, WF_i_site,WR_i_site,WS_i_site, &
-        startMonth_site, SoilClass_site, endAge_site !(noOfSites)
-    integer, dimension(noOfSites) :: nThinning_site
+        SoilClass_site, endAge_site !(noOfSites)
+    integer, dimension(noOfSites) :: nThinning_site, startMonth_site
     real(kind=8), dimension(12) :: daysInMonth = (/31.,28.,31.,30.,31.,30.,31.,31.,30.,31.,30.,31./), &
         dayOfYear = (/16.,44.,75.,105.,136.,166.,197.,228.,258.,289.,319.,350./)
 
     real(kind=8) :: Pi = 3.141592654, ln2 = 0.693147181
     real (kind=8) :: Lat
-    integer :: i
     real(kind=8) :: SLAt 
     real(kind=8) :: cLat
     real(kind=8) :: sinDec
@@ -71,7 +69,7 @@ subroutine model(y, &
     real(kind=8) :: netRad, defTerm, div, Etransp
 
 !   Climate input
-    real(kind=8), dimension (nmonths) :: Tav, SolarRad, VPD, Tn, Tx, Rain, VPDx, VPDn, RainDays, FrostDays, DayLength
+    real(kind=8), dimension (nmonths) :: Tav, SolarRad, VPD, Tn, Tx, Rain, VPDx, VPDn, FrostDays, DayLength
 
 !   fT - Temperature dependent modifier
     real(kind=8) :: fT, Tmin, Topt, Tmax
@@ -104,25 +102,25 @@ subroutine model(y, &
     real(kind=8) :: CanCover, fullCanAge, lightIntcptn, k, LAI
 
 !   Calculate PAR, APAR, APARu, GPP and NPP
-    real(kind=8) :: RAD, PAR, molPAR_MJ, APAR, APARu, alpha, GPPmolc, GPPdm, gDM_mol, NPP, WF, WS, WR, TotalW, &
-        WF_month, WS_month, WR_month, epsilon, GPP, CO2, fCg, RADint
+    real(kind=8) :: RAD, molPAR_MJ, alpha, GPPdm, gDM_mol, NPP, WF, WS, WR, TotalW, &
+        epsilon, GPP, CO2, fCg, RADint
 
 !   Respiration parameters
-    real(kind=8) :: rg, rf, rw, Q10
+    real(kind=8) :: rg
 
 !   derived parameters
     real(kind=8) :: pfsPower, pfsConst
 
 !   Carbon allocation routine and mensurational data
     real(kind=8) :: m0, pFS20, pFS2, AvStemMass, avDBH, StemConst, StemPower, BasArea, Height, aH, bW, &
-        cD, SLA, SLA1, SLA0, tSLA, avLAI, pFS, pR, pRx, pRn, pS, pF, fracBB0, fracBB1, tBB, Density, &
+        SLA, SLA1, SLA0, tSLA, avLAI, pFS, pR, pRx, pRn, pS, pF, fracBB0, fracBB1, tBB, Density, &
         StemNo, fracBB, StandVol, MAI, aV, nVB, nVN, oldVol, rho0,rho1, tRho, CVI
 
 !   Calculate soil carbon balance
 !   Mortality, litterfall and turnover, self thinning law        
-    real(kind=8) :: incrWF, incrWR, incrWS, Littfall, gammaF1, gammaF0, tgammaF, gammaR, kgammaF, &
+    real(kind=8) :: incrWF, incrWR, incrWS, gammaF1, gammaF0, tgammaF, gammaR, kgammaF, &
         delStems, mS, mF, mR, WL, wSx1000, thinPower, n, x1, x2, fN, gammaN, gammaN1, gammaN0, tgammaN, &
-        ngammaN, getMortality, accuracy, delStemNo, dfN, dN, j, wSmax,gammaF, gammaFoliage, lossWF, &
+        ngammaN, getMortality, accuracy, dfN, dN, j, wSmax,gammaF, gammaFoliage, lossWF, &
         lossWR, mortality, FoliageMort, RootMort, StemMort, selfThin
 
 !   Soil carbon and nitrogen balances
@@ -132,26 +130,17 @@ subroutine model(y, &
 
 !   Water balance
     real(kind=8) :: CanCond, MaxCond, LAIgcx, Qa, qb, BLcond, gC, CanopyTranspiration, Transp, &
-        LAImaxIntcptn, MaxIntcptn, EvapTransp, Irrig, cumIrrig, MinASW, MaxASW, poolFractn, MinCond, &
+        LAImaxIntcptn, MaxIntcptn, EvapTransp, Irrig, MinASW, MaxASW, poolFractn, MinCond, &
         pooledSW, fRainInt,RainInt, excessSW, RunOff, supIrrig,TranspScaleFactor, WUE
 
 !   Carbon fluxes (MG/ha)
     real(kind=8) :: GPP_C, NPP_C, Raut, Rhet, Reco, dmC, NEP
 
-!   Systematic error for height, DBH and NEP in the Bayesian Calibration
-    real(kind=8) :: ESYSH, ESYSDBH, ESYSNEP
-
 !   Thinning
-    integer :: nThinning,countThinning
+    integer :: nThinning, countThinning
     real(kind=8) :: delN
     real(kind=8), allocatable, dimension(:,:) :: thinning
     real(kind=8), allocatable, dimension(:,:) :: site_thinning
-
-!   Management aspects
-!   Stand caratheristics
-    real(kind=8) :: WF_i
-    real(kind=8) :: WS_i
-    real(kind=8) :: WR_i
 
 !   Site caractheristics
     real(kind=8) :: Yr_C_i
@@ -484,10 +473,6 @@ subroutine model(y, &
             RADint = RAD * lightIntcptn * CanCover
             GPP = epsilon * RADint / 100               !tDM/ha
             NPP = GPP * rg                             !assumes respiratory rate is constant
-            !NPP = GPPdm - (GPPdm * rg) - (((WF * rf) + ((WS + WR) * rw)) * (Q10 ** ((Tav(ii) - 20) / 10)))   !tDM/ha  
-            !if (NPP < 0) then
-            !    NPP = 0 
-            !end if
 
 
 !           Now do the water balance ...

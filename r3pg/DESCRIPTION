@@ -1,20 +1,16 @@
 Package: threePGN
 Type: Package
 Title: 3PGN model
-Description: This package contains a fortran version of 3PGN model wrapped into R
+Description: This package contains a fortran version of 3PGN model wrapped into R.
 Version: 0.1.0
 Authors@R: c(
     person("Francesco", "Minunno", , "francesco.minunno@helsinki.fi", role = c("aut", "cre")),
     person("Florian", "Hartig", , "florian.hartig@biologie.uni-regensburg.de", role = c("aut")),
     person("Volodymyr", "Trotsiuk", , "vtrotsiuk@gmail.com", role = c("aut"))
     )
-Author: 
-    Francesco Minunno [aut, cre],
-    Florian Hartig [aut, cre],
-    Volodymyr Trotsiuk [aut, cre]
-Maintainer: The package maintainer <francesco.minunno@helsinki.fi>
 License: GPL-3
 Depends:
+    R (>= 2.10)
 Imports:
 Suggests:
     knitr,
@@ -27,4 +23,3 @@ RoxygenNote: 6.0.1
 URL: https://github.com/checcomi/threePGN-package
 BugReports: https://github.com/checcomi/threePGN-package/issues
 VignetteBuilder: knitr
-

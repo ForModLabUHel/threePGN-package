@@ -4,7 +4,7 @@
 #' @param climate a \code{three-dimentional array} containing the weather information. Please refer to \code{\link{data_climate}} for more information
 #' @param thinning an \code{data frame} containing information regarding thinning. Please refer to \code{\link{data_thinning}} for more information
 #' @param parameters a vector of parameters values. To see the order of parameters please refer to \code{\link{data_param}}
-#' @param outputs a numerical vector of output variables IDs. To see the order of variables and meaning refer to \code{\link{data_output_var}}
+#' @param outputs a numerical vector of output variables IDs. To see the order of variables and meaning refer to \code{\link{data_output}}
 #'
 #' @details This is the model
 #'
