@@ -51,6 +51,40 @@ r3pgn <- function(siteData,
   return(out)
 }
 
+r3pgnMix <- function(siteData,
+                     climate,
+                     thinning = NULL,
+                     parameters,
+                     outputs = c(1:5,10:12,26:27)){
+
+  nMonths <- dim(climate)[1]
+  noOfLayers <- nrow(siteData)
+  totThinning <- sum(siteData$nThinning)
+
+  if( all( is.null( thinning ) ) | totThinning == 0.) thinning = matrix(0,2,6)
+
+  nvariables = length(outputs)
+
+  y <- array(-999,dim=c(nMonths,nvariables,noOfLayers))
+
+  # if( length(unique(siteData[['climId']])) != nClimID ) stop("Provided climate data don't match with site data")
+
+  out <- .Fortran('threePGNmix1Site',
+                  output = as.array(y),
+                  nMonths = as.integer(nMonths),
+                  noOfLayers = as.integer(noOfLayers),
+                  nvariables = as.integer(nvariables),
+                  vars = as.integer(outputs),
+                  siteData = as.matrix(siteData),
+                  totThinning = as.integer(totThinning),
+                  thinning = as.matrix(thinning),
+                  weather = as.array(climate),
+                  parameters = as.numeric(parameters))
+
+  out$vars <- outNam[outputs]
+  class(out) = "r3pgOutMix"
+  return(out)
+}
 
 outNam <- c("StandAge","StemNo","BasArea","StandVol","avDBH","MAI",
             "SLA","CanCover","LAI","WF","WR","WS","WL",
