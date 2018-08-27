@@ -3,4 +3,6 @@
 S3method(plot,r3pgOut)
 S3method(print,r3pgOut)
 export(r3pgn)
+export(r3pgnMix)
 useDynLib(threePGN)
+useDynLib(threePGNmix1Site)
