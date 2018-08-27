@@ -6,7 +6,7 @@ firstRun <- r3pgn(siteData = data_site,
 firstRunMix <- r3pgnMix(siteData = data_siteMix,
                   climate = data_climate[,,1],
                   parameters = data_paramMix,
-                  outputs = c(1:5, 10:12, 26:27))
+                  outputs = c(1:62))
 
 
 plot(firstRunMix$output[,3,1])
