@@ -34,11 +34,11 @@ subroutine threePGNmix1Site(y, &
     real(kind=8), dimension(nmonths, 5) :: weather
     real(kind=8), dimension(46,noOfLayers) :: pa
     real(kind=8) :: y(nmonths, nvariables, noOfLayers)
-    real(kind=8) :: outs(59)
+    real(kind=8) :: outs(62,noOfLayers)
     
     ! real(kind=8), dimension(noOfLayers) :: climID
     real(kind=8), dimension (noOfLayers) :: number_site
-    integer :: ii, layer, month, startMonth, jj, ij,ijj
+    integer :: ii, layer, month, jj, ij,ijj
     real(kind=8), dimension(12) :: NEPmat=0
     real(kind=8) :: aNEP
     real(kind=8), dimension(noOfLayers) :: Lat_site, StemNo_site, ASW_site, MinASW_site, & 
@@ -136,7 +136,7 @@ subroutine threePGNmix1Site(y, &
     real(kind=8) :: GPP_C, NPP_C, Raut, Rhet, Reco, dmC, NEP
 
 !   Thinning
-    integer :: nThinning, countThinning
+    integer :: nThinning, countThinning(noOfLayers)
     real(kind=8) :: delN
     real(kind=8), allocatable, dimension(:,:) :: thinning
     real(kind=8), allocatable, dimension(:,:) :: site_thinning
@@ -170,6 +170,19 @@ subroutine threePGNmix1Site(y, &
     ! climID = siteData(:,16)
 	FR_site = siteData(:,17)
 
+	outs = 0.
+	outs( 1, : ) = startAge_site
+	outs( 2, : ) = StemNo_site
+	outs( 10, : ) = WF_i_site
+	outs( 11, : ) = WR_i_site
+	outs( 12, : ) = WS_i_site
+	outs( 51, : ) = ASW_site
+	outs( 60, : ) = FR_site(:)
+	outs( 61, : ) = poolFractn_site
+	outs( 62, : ) = startMonth_site
+	
+
+	
 !   Add thinning if present
     if (totThinning > 0) then
         allocate(thinning(totThinning,6))
@@ -210,20 +223,21 @@ subroutine threePGNmix1Site(y, &
 	!       Initialize
 			Irrig = 0.0		!#!# irrigation should be included in the inputs. should we partition irrigation between species?
 			Lat = Lat_site ( layer )
-			StemNo = StemNo_site ( layer )
+			StemNo = outs( 2, layer )
 			SoilClass = SoilClass_site ( layer )
-			FR = FR_site ( layer )
-			ASW = ASW_site ( layer )
+			FR = outs( 60, layer )
+			ASW = outs( 51, layer )
 			MinASW = MinASW_site ( layer )
 			MaxASW = MaxASW_site ( layer )
-			poolFractn = poolFractn_site( layer )
-			standAge = startAge_site( layer )
-			startMonth = startMonth_site( layer )
-			WF = WF_i_site( layer )
-			WR = WR_i_site( layer )
-			WS = WS_i_site( layer )
+			poolFractn = outs( 61, layer )
+			standAge = outs( 1, layer )
+			month = outs( 62, layer )
+			WF = outs( 10, layer )
+			WR = outs( 11, layer )
+			WS = outs( 12, layer )
 			nThinning = nThinning_site( layer )
 
+			
 ! ----------------------------------------------------------------------------------------
 !   Assign parameters
 			StemPower = pa ( 1,layer)
@@ -314,7 +328,7 @@ subroutine threePGNmix1Site(y, &
 	
 	!       Site level thinning if preset
 			if (nThinning > 0) then
-				countThinning = 1
+				countThinning(layer) = 1
 				allocate( site_thinning( nThinning,6))
 				ij = 0
 				do jj = 1, totThinning
@@ -383,10 +397,232 @@ subroutine threePGNmix1Site(y, &
 
 			oldVol = StandVol  
 
+			!!store outputs
+			outs( 1, layer ) = StandAge
+			outs( 2, layer ) = StemNo
+			outs( 3, layer ) = BasArea
+			outs( 4, layer ) = StandVol
+			outs( 5, layer ) = avDBH
+			outs( 6, layer ) = MAI
+			outs( 7, layer ) = SLA
+			outs( 8, layer ) = CanCover
+			outs( 9, layer ) = LAI
+			outs( 10, layer ) = WF
+			outs( 11, layer ) = WR
+			outs( 12, layer ) = WS
+			outs( 13, layer ) = WL
+			outs( 14, layer ) = TotalW
+			outs( 15, layer ) = AvStemMass
+			outs( 16, layer ) = fracBB
+			outs( 17, layer ) = fAge
+			outs( 18, layer ) = fVPD
+			outs( 19, layer ) = fT
+			outs( 20, layer ) = fCalpha
+			outs( 21, layer ) = fCg
+			outs( 22, layer ) = fFrost
+			outs( 23, layer ) = fSW
+			outs( 24, layer ) = fNutr
+			outs( 25, layer ) = PhysMod
+			outs( 26, layer ) = GPP
+			outs( 27, layer ) = NPP
+			outs( 28, layer ) = RadInt
+			outs( 29, layer ) = alphaC
+			outs( 30, layer ) = epsilon
+			outs( 31, layer ) = CVI
+			outs( 32, layer ) = m
+			outs( 33, layer ) = pR
+			outs( 34, layer ) = pS
+			outs( 35, layer ) = pF
+			outs( 36, layer ) = pFS
+			outs( 37, layer ) = gammaF
+			outs( 38, layer ) = lossWF
+			outs( 39, layer ) = lossWR
+			outs( 40, layer ) = wSmax
+			outs( 41, layer ) = gammaN
+			outs( 42, layer ) = Mortality
+			outs( 43, layer ) = supIrrig
+			outs( 44, layer ) = RunOff
+			outs( 45, layer ) = fRainInt
+			outs( 46, layer ) = RainInt
+			outs( 47, layer ) = CanCond
+			outs( 48, layer ) = WUE
+			outs( 49, layer ) = EvapTransp
+			outs( 50, layer ) = Transp
+			outs( 51, layer ) = ASW
+			outs( 52, layer ) = NEP
+			outs( 53, layer ) = Rhet
+			outs( 54, layer ) = Yr_C
+			outs( 55, layer ) = Yl_C
+			outs( 56, layer ) = O_C
+			outs( 57, layer ) = Yr_N
+			outs( 58, layer ) = Yl_N
+			outs( 59, layer ) = O_N
+			outs( 60, layer ) = FR
+			outs( 61, layer ) = poolFractn
+			outs( 62, layer ) = month
+
+		enddo !layer loop	
+			
+			
+			
+		do layer = 1, noOfLayers
+
+			!!initialize variables
+			StandAge = outs( 1, layer )
+			StemNo = outs( 2, layer )
+			BasArea = outs( 3, layer )
+			StandVol = outs( 4, layer )
+			avDBH = outs( 5, layer )
+			MAI = outs( 6, layer )
+			SLA = outs( 7, layer )
+			CanCover = outs( 8, layer )
+			LAI = outs( 9, layer )
+			WF = outs( 10, layer )
+			WR = outs( 11, layer )
+			WS = outs( 12, layer )
+			WL = outs( 13, layer )
+			TotalW = outs( 14, layer )
+			AvStemMass = outs( 15, layer )
+			fracBB = outs( 16, layer )
+			fAge = outs( 17, layer )
+			fVPD = outs( 18, layer )
+			fT = outs( 19, layer )
+			fCalpha = outs( 20, layer )
+			fCg = outs( 21, layer )
+			fFrost = outs( 22, layer )
+			fSW = outs( 23, layer )
+			fNutr = outs( 24, layer )
+			PhysMod = outs( 25, layer )
+			GPP = outs( 26, layer )
+			NPP = outs( 27, layer )
+			RadInt = outs( 28, layer )
+			alphaC = outs( 29, layer )
+			epsilon = outs( 30, layer )
+			CVI = outs( 31, layer )
+			m = outs( 32, layer )
+			pR = outs( 33, layer )
+			pS = outs( 34, layer )
+			pF = outs( 35, layer )
+			pFS = outs( 36, layer )
+			gammaF = outs( 37, layer )
+			lossWF = outs( 38, layer )
+			lossWR = outs( 39, layer )
+			wSmax = outs( 40, layer )
+			gammaN = outs( 41, layer )
+			Mortality = outs( 42, layer )
+			supIrrig = outs( 43, layer )
+			RunOff = outs( 44, layer )
+			fRainInt = outs( 45, layer )
+			RainInt = outs( 46, layer )
+			CanCond = outs( 47, layer )
+			WUE = outs( 48, layer )
+			EvapTransp = outs( 49, layer )
+			Transp = outs( 50, layer )
+			ASW = outs( 51, layer )
+			NEP = outs( 52, layer )
+			Rhet = outs( 53, layer )
+			Yr_C = outs( 54, layer )
+			Yl_C = outs( 55, layer )
+			O_C = outs( 56, layer )
+			Yr_N = outs( 57, layer )
+			Yl_N = outs( 58, layer )
+			O_N = outs( 59, layer )
+			FR = outs( 60, layer )
+			poolFractn = outs( 61, layer )
+			month = outs( 62, layer )
+		
+!   Assign parameters
+			StemPower = pa ( 1,layer)
+			aH = pa ( 2,layer)
+			bW = pa ( 3,layer)
+			klmax = pa ( 4,layer)
+			alpha = pa ( 5,layer)
+			Tmin = pa ( 6,layer)
+			krmax = pa ( 7,layer)
+			gammaF1 = pa ( 8,layer)
+			fN0 = pa ( 9,layer)
+			rg = pa ( 10,layer)
+			rho1 = pa ( 11,layer)
+			gammaR = pa ( 12,layer)
+			Topt = pa ( 13,layer)
+			MaxCond = pa ( 14,layer)
+			StemConst = pa ( 15,layer)
+			pFS20 = pa ( 16,layer)
+			pRn = pa ( 17,layer)
+			k = pa ( 18,layer)
+			fracBB1 = pa (19,layer)
+			LAIgcx = pa (20,layer)
+			fullCanAge = pa (21,layer)
+			pRx = pa (22,layer)
+			CoeffCond = pa (23,layer)
+			pFS2 = pa (24,layer)
+			hc = pa (25,layer)
+			kF = pa (26,layer)
+			SLA1 = pa (27,layer)
+			tBB = pa (28,layer)
+			m0 = pa (29,layer)
+			tSLA = pa (30,layer)
+			Tmax = pa (31,layer)
+			MaxIntcptn = pa (32,layer)
+			fracBB0 = pa (33,layer)
+			SLA0 = pa (34,layer)
+			BLcond = pa (35,layer)
+			nAge = pa (36,layer)
+			tgammaF = pa (37,layer)
+			MaxAge = pa (38,layer)
+			rAge = pa (39,layer)
+			gammaF0 = pa (40,layer)
+			komax = pa (41,layer)
+			dmC = pa (42,layer)
+			Yl_C_i = pa (43,layer)
+			Yr_C_i = pa (44,layer)
+			O_C_i = pa (45,layer)
+			LAImaxIntcptn = pa (46,layer)
+			
+			! do layer = 1, noOfLayers
+				! FR_site(layer) = pa ( 46 + layer )
+			! enddo
+			
+		!   Assign constant
+			fCalpha700 = 1.4
+			fCg700 = 0.7
+			fNn = 1
+			gammaN1 = 0
+			gammaN0 = 0
+			tgammaN = 0
+			ngammaN = 1
+			wSx1000 = 300
+			thinPower = 1.5
+			mF = 0
+			mR = 0.2
+			mS = 0.2
+			MinCond = 0
+			rho0 = 0.45
+			tRho = 0
+			aV = 0
+			nVB = 0
+			nVN = 0
+			Qa = -90
+			Qb = 0.8
+			gDM_mol = 24
+			molPAR_MJ = 2.3
+			CO2 = 350
+			Yr_N_i = 0
+			Yl_N_i = 2
+			O_N_i = 6
+			qir = 300
+			qil = 21.9
+			qh = 29
+			qbc = 10
+			el = 0.2
+			er = 0.2
+			Ncf = 1.75
+
+
 	! ----------------------------------------------------------------------------------------
 	!   Loop through each month of the data
 
-			month=startMonth
+			! month=startMonth
         ! do ii = 1, nmonths
 
             month = month + 1
@@ -604,17 +840,17 @@ subroutine threePGNmix1Site(y, &
 
 !           Perform thinning or defoliation events for this time period
 !           need to add thinning and defoliation rootins
-            if (nThinning > 0 .and. countThinning <= nThinning) then 
-                if (StandAge >= site_thinning(countThinning,1)) then
-                    if (StemNo > site_thinning(countThinning,2)) then
-                        delN = (StemNo - site_thinning(countThinning,2)) / StemNo
+            if (nThinning > 0 .and. countThinning(layer) <= nThinning) then 
+                if (StandAge >= site_thinning(countThinning(layer),1)) then
+                    if (StemNo > site_thinning(countThinning(layer),2)) then
+                        delN = (StemNo - site_thinning(countThinning(layer),2)) / StemNo
                         StemNo = StemNo * (1 - delN)
-                        WF = WF * (1 - delN * site_thinning(countThinning,3))
-                        WR = WR * (1 - delN * site_thinning(countThinning,4))
-                        WS = WS * (1 - delN * site_thinning(countThinning,5))
+                        WF = WF * (1 - delN * site_thinning(countThinning(layer),3))
+                        WR = WR * (1 - delN * site_thinning(countThinning(layer),4))
+                        WS = WS * (1 - delN * site_thinning(countThinning(layer),5))
                     end if
-                    countThinning = countThinning + 1
-                    if (countThinning > nThinning) then
+                    countThinning(layer) = countThinning(layer) + 1
+                    if (countThinning(layer) > nThinning) then
                         deallocate(site_thinning)
                     end if
                 end If
@@ -713,90 +949,80 @@ subroutine threePGNmix1Site(y, &
 ! ----------------------------------------------------------------------------------------
 !   Write the output
 
-            outs( 1 ) = StandAge
-            outs( 2 ) = StemNo
-            outs( 3 ) = BasArea
-            outs( 4 ) = StandVol
-            outs( 5 ) = avDBH
-            outs( 6 ) = MAI
-            outs( 7 ) = SLA
-            outs( 8 ) = CanCover
-            outs( 9 ) = LAI
-            outs( 10 ) = WF
-            outs( 11 ) = WR
-            outs( 12 ) = WS
-            outs( 13 ) = WL
-            outs( 14 ) = TotalW
-            outs( 15 ) = AvStemMass
-            outs( 16 ) = fracBB
-            outs( 17 ) = fAge
-            outs( 18 ) = fVPD
-            outs( 19 ) = fT
-            outs( 20 ) = fCalpha
-            outs( 21 ) = fCg
-            outs( 22 ) = fFrost
-            outs( 23 ) = fSW
-            outs( 24 ) = fNutr
-            outs( 25 ) = PhysMod
-            outs( 26 ) = GPP
-            outs( 27 ) = NPP
-            outs( 28 ) = RadInt
-            outs( 29 ) = alphaC
-            outs( 30 ) = epsilon
-            outs( 31 ) = CVI
-            outs( 32 ) = m
-            outs( 33 ) = pR
-            outs( 34 ) = pS
-            outs( 35 ) = pF
-            outs( 36 ) = pFS
-            outs( 37 ) = gammaF
-            outs( 38 ) = lossWF
-            outs( 39 ) = lossWR
-            outs( 40 ) = wSmax
-            outs( 41 ) = gammaN
-            outs( 42 ) = Mortality
-            outs( 43 ) = supIrrig
-            outs( 44 ) = RunOff
-            outs( 45 ) = fRainInt
-            outs( 46 ) = RainInt
-            outs( 47 ) = CanCond
-            outs( 48 ) = WUE
-            outs( 49 ) = EvapTransp
-            outs( 50 ) = Transp
-            outs( 51 ) = ASW
-            outs( 52 ) = NEP
-            outs( 53 ) = Rhet
-            outs( 54 ) = Yr_C
-            outs( 55 ) = Yl_C
-            outs( 56 ) = O_C
-            outs( 57 ) = Yr_N
-            outs( 58 ) = Yl_N
-            outs( 59 ) = O_N
+            outs( 1, layer ) = StandAge
+            outs( 2, layer ) = StemNo
+            outs( 3, layer ) = BasArea
+            outs( 4, layer ) = StandVol
+            outs( 5, layer ) = avDBH
+            outs( 6, layer ) = MAI
+            outs( 7, layer ) = SLA
+            outs( 8, layer ) = CanCover
+            outs( 9, layer ) = LAI
+            outs( 10, layer ) = WF
+            outs( 11, layer ) = WR
+            outs( 12, layer ) = WS
+            outs( 13, layer ) = WL
+            outs( 14, layer ) = TotalW
+            outs( 15, layer ) = AvStemMass
+            outs( 16, layer ) = fracBB
+            outs( 17, layer ) = fAge
+            outs( 18, layer ) = fVPD
+            outs( 19, layer ) = fT
+            outs( 20, layer ) = fCalpha
+            outs( 21, layer ) = fCg
+            outs( 22, layer ) = fFrost
+            outs( 23, layer ) = fSW
+            outs( 24, layer ) = fNutr
+            outs( 25, layer ) = PhysMod
+            outs( 26, layer ) = GPP
+            outs( 27, layer ) = NPP
+            outs( 28, layer ) = RadInt
+            outs( 29, layer ) = alphaC
+            outs( 30, layer ) = epsilon
+            outs( 31, layer ) = CVI
+            outs( 32, layer ) = m
+            outs( 33, layer ) = pR
+            outs( 34, layer ) = pS
+            outs( 35, layer ) = pF
+            outs( 36, layer ) = pFS
+            outs( 37, layer ) = gammaF
+            outs( 38, layer ) = lossWF
+            outs( 39, layer ) = lossWR
+            outs( 40, layer ) = wSmax
+            outs( 41, layer ) = gammaN
+            outs( 42, layer ) = Mortality
+            outs( 43, layer ) = supIrrig
+            outs( 44, layer ) = RunOff
+            outs( 45, layer ) = fRainInt
+            outs( 46, layer ) = RainInt
+            outs( 47, layer ) = CanCond
+            outs( 48, layer ) = WUE
+            outs( 49, layer ) = EvapTransp
+            outs( 50, layer ) = Transp
+            outs( 51, layer ) = ASW
+            outs( 52, layer ) = NEP
+            outs( 53, layer ) = Rhet
+            outs( 54, layer ) = Yr_C
+            outs( 55, layer ) = Yl_C
+            outs( 56, layer ) = O_C
+            outs( 57, layer ) = Yr_N
+            outs( 58, layer ) = Yl_N
+            outs( 59, layer ) = O_N
+			outs( 60, layer ) = FR
+			outs( 61, layer ) = poolFractn
+			outs( 62, layer ) = month
 
 !           store output
-            y(ii,1:nvariables,layer) = outs(vars)
+            y(ii,1:nvariables,layer) = outs(vars,layer)
             !open (20, file='output.txt', action='write')
             !write (20,21) y(ii,1), y(ii,2), y(ii,3)
             !21 format (7f20.10)
-
-	!       update initial state variables
-			! Lat = Lat_site ( layer )
-			StemNo_site ( layer ) = StemNo
-			! SoilClass = SoilClass_site ( layer )
-			! FR = FR_site ( layer )
-			ASW_site ( layer ) = ASW
-			! MinASW = MinASW_site ( layer )
-			! MaxASW = MaxASW_site ( layer )
-			poolFractn_site( layer ) = poolFractn
-			startAge_site( layer ) = standAge
-			startMonth_site( layer ) = month
-			WF_i_site( layer ) = WF
-			WR_i_site( layer ) = WR
-			WS_i_site( layer ) = WS
-			! nThinning = nThinning_site( layer )
-			
+		
         end do
 
     end do
 
 end subroutine threePGNmix1Site
+
+
+
