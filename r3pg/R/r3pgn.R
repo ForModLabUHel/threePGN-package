@@ -52,7 +52,6 @@ r3pgn <- function(siteData,
 }
 
 #' @export
-#' @useDynLib threePGNmix1Site
 r3pgnMix <- function(siteData,
                      climate,
                      thinning = NULL,
