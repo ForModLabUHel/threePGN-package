@@ -884,7 +884,7 @@ subroutine getTranspiration( month )
     
     e20 = 2.2          ! rate of change of saturated VP with T at 20C
     rhoAir = 1.2       ! density of air, kg/m3
-    lambda = 2460000#  ! latent heat of vapourisation of H2O (J/kg)
+    lambda = 2460000  ! latent heat of vapourisation of H2O (J/kg)
     VPDconv = 0.000622 ! convert VPD to saturation deficit = 18/29/1000
             
     if ( Apply3PGpjswaterbalance = .TRUE. ) then
