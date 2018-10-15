@@ -218,7 +218,7 @@ NULL
 #'      \item 2: \code{StemNo} - Stand stocking (\eqn{trees/ha})
 #'      \item 3: \code{BasArea} - Stand basal area (\eqn{m^2/ha})
 #'      \item 4: \code{StandVol} - Stand volume excluding branch & bark (\eqn{m^3/ha})
-#'      \item 5: \code{avDBH} - Stand volume excluding branch & bark (\eqn{cm})
+#'      \item 5: \code{avDBH} - Average tree DBH (\eqn{cm})
 #'      \item 6: \code{MAI} - Mean annual volume increment (\eqn{m^3/ha /yr})
 #'      }
 #'   \item Canopy attributes
@@ -247,7 +247,7 @@ NULL
 #'     \item 22: \code{fFrost} - Frost dependent modifier (\eqn{-})
 #'     \item 23: \code{fSW} - Soil water dependent modifier (\eqn{-})
 #'     \item 24: \code{fNutr} - Nutrition dependent modifier (\eqn{-})
-#'     \item 25: \code{PhysMod} - Physiological modifier of canopy conductance (\eqn{-})
+#'     \item 25: \code{Height} - Average tree height (\eqn{m})
 #'    }
 #'   \item Biomass production and allocation
 #'    \itemize{
