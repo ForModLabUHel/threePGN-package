@@ -745,7 +745,7 @@ subroutine model(y, &
             outs( 22 ) = fFrost
             outs( 23 ) = fSW
             outs( 24 ) = fNutr
-            outs( 25 ) = PhysMod
+            outs( 25 ) = Height
             outs( 26 ) = GPP
             outs( 27 ) = NPP
             outs( 28 ) = RadInt
