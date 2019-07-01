@@ -1,6 +1,6 @@
 Package: threePGN
 Type: Package
-Title: 3PGN model
+Title: A Fortran implementation of the 3PGN model for R
 Description: This package contains a fortran version of 3PGN model wrapped into R.
 Version: 0.1.0
 Authors@R: c(
